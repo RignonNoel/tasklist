@@ -1,0 +1,13 @@
+{% load static %}
+
+<div class="navbar">
+    <a href="#" class="navbar__logo">
+        <img src="{% static 'images/favicon.png' %}">
+    </a>
+
+    <nav class="navbar__links">
+        <a class="navbar__link" href="#">
+            {{user.username}}
+        </a>
+    </nav>
+</div>

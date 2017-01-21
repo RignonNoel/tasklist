@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<h1>
+    #Mes projets
+</h1>
+<div class="content">
+    <div class="table-menu">
+        <a href="#" class="table-menu__item" id="triggerModalNewProject">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            Ajouter un projet
+        </a>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <td class="table__column--no-width"></td>
+                <td>#Projets</td>
+                <td>#Tâches</td>
+                <td></td>
+                <td></td>
+            </tr>
+        </thead>
+        {% for project in admin %}
+        <tr>
+            <td>
+                <i class="fa fa-user-plus" aria-hidden="true" title="#Vous êtes l'administrateur de ce projet"></i>
+            </td>
+            <td>
+                <a href="{% url 'tasks:detail_project' project.id %}">
+                    {{ project.name }}
+                </a>
+            </td>
+            <td>
+                {{ project.tasks.count }}
+            </td>
+            <td>
+                <a href="#" title="#Éditer ce projet" id="triggerModalEditProject{{project.id}}">
+                    <i class="fa fa-edit" aria-hidden="true"></i>
+                </a>
+            </td>
+            <td>
+                <form class="form" action="{% url 'tasks:delete_project' project.id %}" method="post">
+                    {% csrf_token%}
+                    <input name="next" type="hidden" value="{{request.path}}"/>
+
+                    <a href="" onclick="get_form(this).submit(); return false">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </a>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        {% for project in manage %}
+        <tr>
+            <td>
+                <i class="fa fa-user" aria-hidden="true" title="#Vous êtes manageur sur ce projet"></i>
+            </td>
+            <td>
+                <a href="{% url 'tasks:detail_project' project.id %}">
+                    {{ project.name }}
+                </a>
+            </td>
+            <td>
+                {{ project.tasks.count }}
+            </td>
+            <td>
+                <a href="#" title="#Éditer ce projet" id="triggerModalEditProject{{project.id}}">
+                    <i class="fa fa-edit" aria-hidden="true"></i>
+                </a>
+            </td>
+            <td>
+                <form class="form" action="{% url 'tasks:delete_project' project.id %}" method="post">
+                    {% csrf_token%}
+                    <input name="next" type="hidden" value="{{request.path}}"/>
+
+                    <a href="" onclick="get_form(this).submit(); return false">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </a>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        {% for project in edit %}
+        <tr>
+            <td>
+                <i class="fa fa-pencil" aria-hidden="true" title="#Vous pouvez éditer les tâches de ce projet"></i>
+            </td>
+            <td>
+                <a href="{% url 'tasks:detail_project' project.id %}">
+                    {{ project.name }}
+                </a>
+            </td>
+            <td>
+                {{ project.tasks.count }}
+            </td>
+            <td>
+                <a href="#" title="#Éditer ce projet" id="triggerModalEditProject{{project.id}}">
+                    <i class="fa fa-edit" aria-hidden="true"></i>
+                </a>
+            </td>
+            <td>
+                <form class="form" action="{% url 'tasks:delete_project' project.id %}" method="post">
+                    {% csrf_token%}
+                    <input name="next" type="hidden" value="{{request.path}}"/>
+
+                    <a href="" onclick="get_form(this).submit(); return false">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </a>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        {% for project in read_only %}
+        <tr>
+            <td>
+                <i class="fa fa-eye" aria-hidden="true" title="#Vous pouvez lire les tâches de ce projet"></i>
+            </td>
+            <td>
+                <a href="{% url 'tasks:detail_project' project.id %}">
+                    {{ project.name }}
+                </a>
+            </td>
+            <td>
+                {{ project.tasks.count }}
+            </td>
+            <td>
+                <a href="#" title="#Éditer ce projet" id="triggerModalEditProject{{project.id}}">
+                    <i class="fa fa-edit" aria-hidden="true"></i>
+                </a>
+            </td>
+            <td>
+                <form class="form" action="{% url 'tasks:delete_project' project.id %}" method="post">
+                    {% csrf_token%}
+                    <input name="next" type="hidden" value="{{request.path}}"/>
+
+                    <a href="" onclick="get_form(this).submit(); return false">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </a>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+    <!------------------------
+    MODAL TO ADD A NEW PROJECT
+    ------------------------->
+    {% include 'projects/_modal_new_project.html' %}
+
+    <!------------------------
+    MODAL TO EDIT A PROJECT
+    ------------------------->
+    {% for project in admin %}
+        {% include 'projects/_modal_edit_project.html' with project=project %}
+    {% endfor %}
+
+    {% for project in manage %}
+        {% include 'projects/_modal_edit_project.html' with project=project %}
+    {% endfor %}
+
+    {% for project in edit %}
+        {% include 'projects/_modal_edit_project.html' with project=project %}
+    {% endfor %}
+
+    {% for project in read_only %}
+        {% include 'projects/_modal_edit_project.html' with project=project %}
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block extrajs %}
+    <script src="{% static 'js/modal.js' %}"></script>
+    <script>
+        initModal('modalNewProject', 'triggerModalNewProject');
+
+        {% for project in admin %}
+        initModal('modalEditProject{{project.id}}', 'triggerModalEditProject{{project.id}}');
+        {% endfor %}
+
+        {% for project in manage %}
+        initModal('modalEditProject{{project.id}}', 'triggerModalEditProject{{project.id}}');
+        {% endfor %}
+
+        {% for project in edit %}
+        initModal('modalEditProject{{project.id}}', 'triggerModalEditProject{{project.id}}');
+        {% endfor %}
+
+        {% for project in read_only %}
+        initModal('modalEditProject{{project.id}}', 'triggerModalEditProject{{project.id}}');
+        {% endfor %}
+    </script>
+
+    <script type="text/javascript">
+        //<![CDATA[
+        function get_form( element )
+        {
+            while( element )
+            {
+                element = element.parentNode
+                if( element.tagName.toLowerCase() == "form" )
+                {
+                    //alert( element ) //debug/test
+                    return element
+                }
+            }
+            return 0; //error: no form found in ancestors
+        }
+        //]]>
+    </script>
+{% endblock %}

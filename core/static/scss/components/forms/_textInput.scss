@@ -1,0 +1,66 @@
+﻿.text-input-group {
+    display: inline-block;
+    width: 100%;
+
+    &--2-per-line {
+        .text-input {
+            width: 50%;
+            float: left;
+            margin-top: 0;
+        }
+    }
+
+    &--3-per-line {
+        .text-input {
+            width: 33%;
+            float: left;
+            margin-top: 0;
+        }
+    }
+
+    &--4-per-line {
+        .text-input {
+            width: 25%;
+            float: left;
+            margin-top: 0;
+        }
+    }
+}
+
+.text-input {
+    display: block;
+
+    width: 100%;
+    color: black;
+
+    padding: 10px 10px;
+    font-size: 14px;
+
+    border: 1px solid lightgray;
+
+    &:focus {
+        & + .text-input__explanation {
+            opacity: 1;
+        }
+    }
+
+    &.validationElement {
+        border: 1px solid $color-validation-error;
+        color: $color-validation-error;
+        background-color: $color-validation-fill;
+    }
+
+    &__explanation {
+        opacity: 0;
+
+        color: gray;
+        font-weight: $font-weight-bold;
+        font-size: 12px;
+
+        transition: all linear 200ms;
+        position: relative;
+        top: -25px;
+
+        height: 0;
+    }
+}

@@ -1,0 +1,36 @@
+﻿.textarea {
+    display: block;
+
+    width: 100%;
+    min-height: 120px;
+
+    color: black;
+
+    padding: 10px 10px;
+    font-size: 14px;
+
+    resize:vertical ;
+
+    &:focus {
+        & + .text-input__explanation {
+            opacity: 1;
+        }
+    }
+
+    &.validationElement {
+        border: 1px solid $color-validation-error;
+        color: $color-validation-error;
+        background-color: $color-validation-fill;
+    }
+
+    &__explanation {
+        opacity: 0;
+
+        margin-top: 5px;
+        color: $color-theme-gray;
+        font-weight: $font-weight-thin;
+        font-size: 12px;
+
+        transition: all linear 200ms;
+    }
+}

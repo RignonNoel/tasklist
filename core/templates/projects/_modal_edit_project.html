@@ -1,0 +1,19 @@
+<div id="modalEditProject{{project.id}}" class="modal">
+    <div class="modal__content">
+        <div class="modal__content__header">
+            <span class="modal__content__header__close">&times;</span>
+
+            <h2>#Éditer : {{project.name}}</h2>
+        </div>
+        <div class="modal__content__body">
+            <form class="form" action="{% url 'tasks:update_project' project.id %}" method="post">
+                {% csrf_token%}
+                <label for='name' class="form__label">#Nom du projet</label>
+                <input id='name' name='name' type="text" class="form__input text-input" value="{{project.name}}" />
+                <input name="next" type="hidden" value="{{request.path}}"/>
+
+                <button type='submit' class="form__submit button button--add button--full">#Enregistrer le projet</button>
+            </form>
+        </div>
+    </div>
+</div>

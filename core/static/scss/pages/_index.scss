@@ -1,0 +1,150 @@
+.page-index {
+
+  &__header {
+    background-image: linear-gradient(
+                    rgba(0, 0, 0, 0.5),
+                    rgba(0, 0, 0, 0.5)
+    ), url('../images/index/banner.jpg');
+
+    background-size: cover;
+    height: 100vh;
+    border-bottom: 1px solid gray;
+    text-align: center;
+
+    &__logo {
+      height: 150px;
+      margin: auto;
+      margin-top: 50px;
+
+      box-shadow: inset 10px 10px 20px linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+    }
+
+    &__title {
+      position: relative;
+      text-align: center;
+      font-size: 50px;
+      text-transform: uppercase;
+      padding: 10px;
+      color: white;
+    }
+
+    &__slogan {
+      position: relative;
+      text-align: center;
+      font-size: 30px;
+
+      color: #CCCCCC;
+    }
+
+    &__more {
+      position: relative;
+      top: 20vh;
+      text-align: center;
+    }
+  }
+
+  &__value-proposition {
+    padding-top: 70px;
+    padding-bottom: 70px;
+
+    &__title{
+      width: 80%;
+      margin: auto;
+      text-align: center;
+      font-size: 30px;
+      color: #5BC0DE;
+    }
+
+    &__description{
+      width: 80%;
+      margin: auto;
+      text-align: center;
+      font-size: 20px;
+
+      &> p{
+        margin-top: 30px;
+      }
+    }
+
+    &--reverse{
+      background-color: #333333;
+      color: white;
+    }
+  }
+
+  &__partners{
+    padding: 20px;
+    margin:0;
+    margin-top: 60px;
+
+    text-align: center;
+
+    &__description{
+      width: 80%;
+      margin: auto;
+      text-align: center;
+      font-size: 20px;
+      padding-bottom: 20px;
+
+      &> p{
+        margin-top: 30px;
+      }
+    }
+
+    &__title{
+      text-align: center;
+
+      font-size: 35px;
+      font-weight: 900;
+
+      margin-bottom: 20px;
+    }
+
+    &__sub-title{
+      text-align: center;
+
+      font-size: 25px;
+      font-weight: 600;
+
+      margin-bottom: 20px;
+    }
+
+    &__logo{
+      display: block;
+      height: 75px;
+
+      margin: auto;
+
+      &+ .page-index__partners__logo{
+        border-top: 1px solid lightgray;
+        margin-top: 10px;
+        padding-top: 10px;
+      }
+    }
+
+    &__block {
+      display: block;
+      text-align: center;
+      font-size: 18px;
+      padding-top: 30px;
+
+      min-height: 380px;
+
+      &+ .page-index__partners__block {
+        border-left: 1px solid gray;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .page-index__header__more {
+    display: none;
+  }
+
+  .page-index__partners__block + .page-index__partners__block{
+    border-left: none;
+    border-top: 1px solid lightgray;
+    margin-top: 50px;
+  }
+}

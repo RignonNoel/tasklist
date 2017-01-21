@@ -1,0 +1,47 @@
+// grid variables
+$grid-columns: 12;
+$grid-max-width: 65em;
+
+// breakpoints
+$breakpoint-small: "only screen and (min-width: 20em)";
+$breakpoint-medium: "only screen and (min-width: 30em)";
+
+// other
+$color-theme-main: #3D3D3D;
+
+$color-background-main: #3D3D3D;
+$color-text-main: white;
+
+$color-background-gray: #FAFAFA;
+$color-text-gray: #303333;
+
+$color-theme-gray: #dfdfdf;
+$theme-color-mint: #14d49d;
+
+$font-weight-thin: 300;
+$font-weight-normal: 500;
+$font-weight-bold: 700;
+
+$color-theme-main-dark: #33465d;
+
+$color-clickable-input-region-border-hover: $color-theme-main;
+$color-clickable-input-region-hover: lighten($color-theme-main, 30%);
+
+$color-theme-gray--lighter-5: lighten($color-theme-gray, 5%);
+$color-theme-gray--lighter-10: lighten($color-theme-gray, 10%);
+$color-theme-gray--lighter-20: lighten($color-theme-gray, 20%);
+$color-theme-gray--lighter-30: lighten($color-theme-gray, 30%);
+
+$font-weight-thin: 300;
+$font-weight-normal: 500;
+$font-weight-bold: 700;
+
+$color-theme-browser: #678FBE;
+
+$color-validation-error: #7F0000;
+$color-validation-fill: lighten($color-validation-error, 65%);
+
+$color-info-background: #d1e5ee;
+$color-info: #31708f;
+
+$color-theme-green: #00d59c;

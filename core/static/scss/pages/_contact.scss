@@ -1,0 +1,46 @@
+.page-contact {
+
+  margin-top: 75px;
+  padding-left: 50px;
+
+  &__title {
+    font-size: 30px;
+  }
+
+  &__content {
+    margin-left: 50px;
+    margin-top: 50px;
+  }
+
+  &__card {
+    border-left: 2px solid $color-theme-main;
+    padding-left: 10px;
+    font-size: 18px;
+  }
+
+  &__text {
+    font-size: 35px;
+    text-align: center;
+    color: $color-theme-main;
+    font-weight: 600;
+  }
+
+  &__map {
+    padding: 50px;
+  }
+}
+
+
+@media screen and (max-width: 1200px) {
+  .page-contact {
+    padding-left: 20px;
+  }
+  .page-contact__card {
+    padding-left: 0;
+    margin-bottom: 50px;
+    border: none;
+  }
+  .page-contact__content {
+    margin-left: 0;
+  }
+}

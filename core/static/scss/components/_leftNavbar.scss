@@ -1,0 +1,35 @@
+.left-navbar {
+  display: block;
+  background: $color-background-gray;
+  border-right: 1px solid lightgrey;
+
+  position: fixed;
+  left: 0;
+  top: 45px;
+
+  z-index: 900;
+
+  width: 200px;
+  height: 100%;
+
+  &__link {
+    display: block;
+    line-height:40px;
+    padding: 5px;
+    transition: all $ease-inout-sine 200ms;
+    cursor: pointer;
+    border-top: 1px solid lightgray;
+    color: $color-text-gray;
+
+    &__icon {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+
+    &:hover {
+      color: $color-text-gray;
+      text-decoration: none;
+      background-color: #FFFFFF;
+    }
+  }
+}

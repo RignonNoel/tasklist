@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load i18n %}
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Gestionnaire de tâche collaborative">
+    <meta name="author" content="RignonNoel">
+
+    <title>
+        {% block title %}
+        {% trans "title-website" %}
+        {% endblock %}
+    </title>
+
+    <link href="{% static 'external/fontAwesome/css/font-awesome.min.css' %}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    {% block extrahead %}
+    {% endblock %}
+</head>
+
+<body ng-app="{% block ng_app %}example.app.static{% endblock %}">
+<div class="navbar">
+    <a href="#" class="navbar__logo">
+        <img src="{% static 'images/favicon.png' %}">
+    </a>
+
+    <nav class="navbar__links">
+        <a class="navbar__link" href="#">
+            {{user.username}}
+        </a>
+    </nav>
+</div>
+
+<div class="left-navbar" id="left-navbar">
+    <nav class="left-navbar__links">
+        <a class="left-navbar__link" href="{% url 'angular' 'projects' %}">
+            <span class="left-navbar__link__icon">
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </span>
+            {% trans "leftNavbar-projects" %}
+        </a>
+        <a class="left-navbar__link" href="{% url 'angular' 'tasks' %}">
+            <span class="left-navbar__link__icon">
+                <i class="fa fa-tasks" aria-hidden="true"></i>
+            </span>
+            {% trans "leftNavbar-tasks" %}
+        </a>
+        <a class="left-navbar__link" href="#">
+            <span class="left-navbar__link__icon">
+                <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+            </span>
+            {% trans "leftNavbar-calendar" %}
+        </a>
+        <a class="left-navbar__link" href="#">
+            <span class="left-navbar__link__icon">
+                <i class="fa fa-cogs" aria-hidden="true"></i>
+            </span>
+            {% trans "leftNavbar-settings" %}
+        </a>
+    </nav>
+</div>
+
+<div class="main-panel ng-cloak" ng-controller="{% block ng_controller %}AppController{% endblock %}">
+    {% block content %}
+    <div ng-repeat="post in posts">
+        <div>
+            {% block post_header %}
+            {% verbatim %}
+            <h3>
+                {{ post.name }}
+            </h3>
+            {% endverbatim %}
+            {% endblock %}
+        </div>
+        {% verbatim %}
+        <p>
+            {{ post.right }}
+        </p>
+        <span ng-repeat="photo in photos[post.id]">
+            <img ng-src="{{ photo.image }}">
+        </span>
+        {% endverbatim %}
+    </div>
+    {% endblock %}
+</div>
+
+<!-- AngularJS integration -->
+<script src="{% static 'external/angular/angular.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+
+<!-- JQuery Library -->
+<script src="{% static 'external/jquery/jquery.js' %}" type="text/javascript"></script>
+
+<!-- Personnal script -->
+<script>
+    // Add the CSRF Token
+    var app = angular.module('example.app'); // Not including a list of dependent modules (2nd parameter to `module`) "re-opens" the module for additional configuration
+    app.config(['$httpProvider', function($httpProvider) {
+        $httpProvider.defaults.headers.common['X-CSRFToken'] = '{{ csrf_token|escapejs }}';
+    }]);
+</script>
+
+<script src="{% static 'js/scrollToAnchor.js' %}" type="text/javascript"></script>
+{% block extrajs %}{% endblock %}
+</body>
+</html>

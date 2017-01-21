@@ -1,0 +1,19 @@
+# ====================== #
+# Remove generated files #
+# ====================== #
+
+*.pyc
+db.sqlite3
+
+# Editor files
+.idea/
+
+# NPM files
+ngApp/node_modules/
+
+# Virtualenv files
+ve/
+
+# CSS compilated file
+core/static/css/style.css
+core/static/scss/app.css.map

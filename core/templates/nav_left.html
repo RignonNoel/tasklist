@@ -1,0 +1,31 @@
+{% load static %}
+{% load i18n %}
+
+<div class="left-navbar" id="left-navbar">
+    <nav class="left-navbar__links">
+        <a class="left-navbar__link" href="#">
+            <span class="left-navbar__link__icon">
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </span>
+            {% trans "leftNavbar-projects" %}
+        </a>
+        <a class="left-navbar__link" href="#">
+            <span class="left-navbar__link__icon">
+                <i class="fa fa-tasks" aria-hidden="true"></i>
+            </span>
+            {% trans "leftNavbar-tasks" %}
+        </a>
+        <a class="left-navbar__link" href="#">
+            <span class="left-navbar__link__icon">
+                <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+            </span>
+            {% trans "leftNavbar-calendar" %}
+        </a>
+        <a class="left-navbar__link" href="#">
+            <span class="left-navbar__link__icon">
+                <i class="fa fa-cogs" aria-hidden="true"></i>
+            </span>
+            {% trans "leftNavbar-settings" %}
+        </a>
+    </nav>
+</div>

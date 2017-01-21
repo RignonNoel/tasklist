@@ -1,0 +1,102 @@
+﻿.radio-group {
+    display: inline-block;
+    width: 100%;
+
+    &--2-per-line {
+        .radio {
+            width: 50%;
+            float: left;
+        }
+    }
+
+    &--3-per-line {
+        .radio {
+            width: 33%;
+            float: left;
+        }
+    }
+
+    &--4-per-line {
+        .radio {
+            width: 25%;
+            float: left;
+        }
+    }
+}
+
+.radio {
+    position: relative;
+
+    & + .radio {
+        margin-top: 0px;
+    }
+
+    &__input {
+        position: absolute;
+        width: 0px;
+        height: 0px;
+        opacity: 0;
+
+        &:checked ~ .radio__label {
+            .radio__display {
+                &:before {
+                    width: 16px;
+                    height: 16px;
+                }
+            }
+        }
+    }
+
+    &__label {
+        display: inline-flex;
+        align-items: center;
+        font-size: 20px;
+        margin-bottom: 0;
+        min-width: 200px;
+
+        padding: 2px 5px;
+        border-radius: 3px;
+        border: 1px solid transparent;
+        transition: all linear 200ms;
+        white-space: nowrap;
+
+        &:hover {
+            background-color: $color-clickable-input-region-hover;
+            border: 1px solid $color-clickable-input-region-border-hover;
+
+            cursor: pointer;
+        }
+    }
+
+    &__display {
+        position: relative;
+
+        width: 24px;
+        height: 24px;
+
+        margin-right: 10px;
+
+        border: 1px solid $color-theme-gray;
+        border-radius: 50%;
+        background-color: white;
+
+        transition: all linear 200ms;
+
+        &:before {
+            content: " ";
+            display: block;
+            position: absolute;
+            background-color: $color-theme-main;
+
+            width: 0px;
+            height: 0px;
+            border-radius: 50%;
+
+            left: 50%;
+            top: 50%;
+            transform: translateX(-50%) translateY(-50%);
+
+            transition: all linear 200ms;
+        }
+    }
+}
