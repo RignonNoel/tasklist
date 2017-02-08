@@ -18,11 +18,13 @@ npm install
 ```
 
 ### Compile SCSS files
+In the `./ngApp/` folder :
 ```
 gulp sass
 ```
 
 ### Start npm / Launch the app
+In the `./ngApp/` folder :
 ```
 npm start
 ```
