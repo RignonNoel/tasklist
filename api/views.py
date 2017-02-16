@@ -89,7 +89,7 @@ class TaskFilter(filters.FilterSet):
     class Meta:
         model = models.Task
         fields = ['id', 'name', 'creation_date',
-                  'end_date', 'project__id', 'end_date_lte']
+                  'end_date', 'project__id', 'end_date_lte', 'assigned__id']
 
 
 class TaskListCreate(generics.ListCreateAPIView):
