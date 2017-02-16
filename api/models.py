@@ -76,13 +76,13 @@ class Task(models.Model):
         null=True
     )
 
-    start_date = models.DateTimeField(
+    start_date = models.DateField(
         verbose_name="Start date",
         blank=True,
         null=True
     )
 
-    end_date = models.DateTimeField(
+    end_date = models.DateField(
         verbose_name="End date",
         blank=True,
         null=True
@@ -144,6 +144,9 @@ class Label(models.Model):
     )
 
     def __unicode__(self):
+        return self.name
+
+    def __str__(self):
         return self.name
 
 

@@ -158,6 +158,7 @@ class TaskSerializer(serializers.ModelSerializer):
 
     labels = BaseLabelSerializer(many=True, read_only=True)
     project = ProjectSerializer()
+    assigned = UserSerializer()
 
 
 class FileSerializer(serializers.ModelSerializer):

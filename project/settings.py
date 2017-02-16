@@ -37,16 +37,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',  # Angular support
     'rest_framework',
     'rest_framework_docs',
     'rest_framework.authtoken',
-    'api'
+    'api',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -133,9 +134,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-ANGULAR_URL = '/ng/'
-ANGULAR_ROOT = os.path.join(BASE_DIR, 'ngApp/')
-
 
 # Django Rest Framework
 
@@ -145,7 +143,6 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -154,3 +151,8 @@ REST_FRAMEWORK = {
         'rest_framework.filters.DjangoFilterBackend',
     ),
 }
+
+
+# CORS Header Django Rest Framework
+
+CORS_ORIGIN_ALLOW_ALL = True

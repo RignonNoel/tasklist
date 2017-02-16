@@ -2,6 +2,7 @@
 
 from api import models
 from api import serializers
+import django_filters
 
 from rest_framework import generics
 from rest_framework import filters
@@ -26,7 +27,7 @@ class ObtainAuthToken(generics.CreateAPIView):
         token, created = Token.objects.get_or_create(user=user)
 
         content = {
-            'token': unicode(token.key),
+            'token': str(token.key),
         }
 
         return Response(content)
@@ -79,10 +80,21 @@ TASKS
 """
 
 
+class TaskFilter(filters.FilterSet):
+    end_date_lte = django_filters.DateTimeFilter(
+        name="end_date",
+        lookup_expr='lte'
+    )
+
+    class Meta:
+        model = models.Task
+        fields = ['id', 'name', 'creation_date',
+                  'end_date', 'project__id', 'end_date_lte']
+
+
 class TaskListCreate(generics.ListCreateAPIView):
     serializer_class = serializers.TaskSerializer
-    filter_backends = [filters.DjangoFilterBackend, ]
-    filter_fields = ['id', 'name', 'creation_date']
+    filter_class = TaskFilter
 
     def get_queryset(self):
         return models.Task.objects.filter(project__access__user=self.request.user)
