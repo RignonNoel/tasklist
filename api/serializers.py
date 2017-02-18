@@ -157,8 +157,11 @@ class TaskSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     labels = BaseLabelSerializer(many=True, read_only=True)
-    project = ProjectSerializer()
-    assigned = UserSerializer()
+    assigned = UserSerializer(required=False)
+
+    project = ProjectSerializer(read_only=True)
+    project_id = serializers.PrimaryKeyRelatedField(
+        queryset=models.Project.objects.all(), source='project', write_only=True)
 
 
 class FileSerializer(serializers.ModelSerializer):
