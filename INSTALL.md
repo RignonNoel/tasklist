@@ -11,24 +11,6 @@ virtualenv ve
 `pip install -r requirements.txt`
 ```
 
-### Install NPM dependencies
-```
-cd ngApp/
-npm install
-```
-
-### Compile SCSS files
-In the `./ngApp/` folder :
-```
-gulp sass
-```
-
-### Start npm / Launch the app
-In the `./ngApp/` folder :
-```
-npm start
-```
-
 ### Run Django Development Server
 NB : Open a new terminal window
 ```
