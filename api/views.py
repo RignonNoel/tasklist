@@ -94,6 +94,26 @@ class ProjectTaskList(generics.ListAPIView):
 
         return models.Task.objects.filter(project__id=self.kwargs['pk'])
 
+
+class ProjectLabelList(generics.ListAPIView):
+    serializer_class = serializers.LabelSerializer
+
+    def get_queryset(self):
+        # Check if project exist
+        project = get_object_or_404(
+            models.Project,
+            pk=self.kwargs['pk']
+        )
+
+        #Check if user have access to this project
+        get_object_or_404(
+            models.Access,
+            project__id=self.kwargs['pk'],
+            user__id=self.request.user.id
+        )
+
+        return models.Label.objects.filter(project__id=self.kwargs['pk'])
+
 """
 ACCESS
 """
