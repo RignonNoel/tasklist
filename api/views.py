@@ -3,6 +3,7 @@
 from api import models
 from api import serializers
 import django_filters
+from django.shortcuts import get_object_or_404
 
 from rest_framework import generics
 from rest_framework import filters
@@ -52,6 +53,26 @@ class ProjectRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return models.Project.objects.all()
+
+
+class ProjectAccessList(generics.ListAPIView):
+    serializer_class = serializers.AccessSerializer
+
+    def get_queryset(self):
+        # Check if project exist
+        project = get_object_or_404(
+            models.Project,
+            pk=self.kwargs['pk']
+        )
+
+        #Check if user have access to this project
+        get_object_or_404(
+            models.Access,
+            project__id=self.kwargs['pk'], 
+            user__id=self.request.user.id
+        )
+
+        return models.Access.objects.filter(project__id=self.kwargs['pk'])
 
 
 """

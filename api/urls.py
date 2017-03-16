@@ -2,7 +2,6 @@ from django.conf.urls import include, url
 from rest_framework.urlpatterns import format_suffix_patterns
 from api import views
 
-
 urlpatterns = format_suffix_patterns(
     [
         # TOKEN AUTHENTIFICATION
@@ -21,6 +20,11 @@ urlpatterns = format_suffix_patterns(
             r'^projects/(?P<pk>\d+)$',
             views.ProjectRetrieveUpdateDestroy.as_view(),
             name='projects_detail'
+        ),
+        url(
+            r'^projects/(?P<pk>\d+)/access$',
+            views.ProjectAccessList.as_view(),
+            name='projects_access_list'
         ),
         # ACCESS
         url(
