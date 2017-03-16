@@ -17,5 +17,3 @@ NB : Open a new terminal window
 cd ../
 python manage.py runserver
 ```
-
-Though we use django server npm should be running behind to compile typescript to javascript instantly.
