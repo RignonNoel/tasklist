@@ -1,7 +1,10 @@
 # coding: utf-8
 
 from api import models
+from django.contrib.auth.models import User
+
 from api import serializers
+
 import django_filters
 from django.shortcuts import get_object_or_404
 
@@ -33,6 +36,17 @@ class ObtainAuthToken(generics.CreateAPIView):
 
         return Response(content)
 
+"""
+Users
+"""
+
+
+class UserRetrieve(generics.RetrieveAPIView):
+    serializer_class = serializers.UserPublicSerializer
+
+    def get_queryset(self):
+        get_object_or_404(User, id=self.kwargs['pk'])
+        return models.User.objects.filter(id=self.kwargs['pk'])
 
 """
 PROJECTS

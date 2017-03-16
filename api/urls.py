@@ -10,6 +10,12 @@ urlpatterns = format_suffix_patterns(
             views.ObtainAuthToken.as_view(),
             name='token_api'
         ),
+        # USERS
+        url(
+            r'^users/(?P<pk>\d+)$',
+            views.UserRetrieve.as_view(),
+            name='users_detail'
+        ),
         # PROJECTS
         url(
             r'^projects$',
