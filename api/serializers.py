@@ -27,6 +27,20 @@ class UserSerializer(serializers.ModelSerializer):
         )
 
 
+class UserPublicSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            'username'
+        )
+        read_only_fields = (
+            'id',
+            'username'
+        )
+
+
 class AuthCustomTokenSerializer(serializers.Serializer):
     login = serializers.CharField()
 
