@@ -26,6 +26,11 @@ urlpatterns = format_suffix_patterns(
             views.ProjectAccessList.as_view(),
             name='projects_access_list'
         ),
+        url(
+            r'^projects/(?P<pk>\d+)/tasks$',
+            views.ProjectTaskList.as_view(),
+            name='projects_tasks_list'
+        ),
         # ACCESS
         url(
             r'^access$',
