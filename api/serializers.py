@@ -174,11 +174,19 @@ class TaskSerializer(serializers.ModelSerializer):
 
     assigned = UserSerializer(read_only=True)
     assigned_id = serializers.PrimaryKeyRelatedField(
-        queryset=models.User.objects.all(), source='user', write_only=True)
+        queryset=models.User.objects.all(),
+        source='assigned',
+        write_only=True,
+        allow_null=True,
+        required=False
+    )
 
     project = ProjectSerializer(read_only=True)
     project_id = serializers.PrimaryKeyRelatedField(
-        queryset=models.Project.objects.all(), source='project', write_only=True)
+        queryset=models.Project.objects.all(),
+        source='project',
+        write_only=True
+    )
 
 
 class FileSerializer(serializers.ModelSerializer):
