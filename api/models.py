@@ -115,6 +115,11 @@ class Task(models.Model):
         null=True
     )
 
+    done = models.BooleanField(
+        verbose_name="Is done?",
+        default=False
+    )
+
     def __unicode__(self):
         return self.name
 
