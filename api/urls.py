@@ -18,14 +18,14 @@ urlpatterns = format_suffix_patterns(
         ),
         # NOTIFICATION
         url(
-            r'^users/(?P<uid>\d+)/notification$',
+            r'^notification$',
             views.NotificationList.as_view(),
-            name='user_notification_list'
+            name='notification_list'
         ),
         url(
-            r'^users/(?P<uid>\d+)/notification/(?P<pk>\d+)$',
+            r'^notification/(?P<pk>\d+)$',
             views.NotificationRetrieveUpdate.as_view(),
-            name='user_notification_detail'
+            name='notification_detail'
         ),
         # PROJECTS
         url(

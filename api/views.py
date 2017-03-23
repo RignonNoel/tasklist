@@ -7,6 +7,7 @@ from api import serializers
 
 import django_filters
 from django.shortcuts import get_object_or_404
+from django.shortcuts import get_list_or_404
 
 from rest_framework import generics
 from rest_framework import filters
@@ -31,8 +32,7 @@ class ObtainAuthToken(generics.CreateAPIView):
         token, created = Token.objects.get_or_create(user=user)
 
         content = {
-            'token': str(token.key),
-            'user_id': user.id
+            'token': str(token.key)
         }
 
         return Response(content)
@@ -171,12 +171,18 @@ class TaskListCreate(generics.ListCreateAPIView):
     serializer_class = serializers.TaskSerializer
     filter_class = TaskFilter
 
+    def get_initial(self):
+        return {'created_by': self.request.user}
+
     def get_queryset(self):
         return models.Task.objects.filter(project__access__user=self.request.user)
 
 
 class TaskRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.TaskSerializer
+
+    def get_initial(self):
+        return {'created_by': self.request.user}
 
     def get_queryset(self):
         return models.Task.objects.all()
@@ -190,13 +196,7 @@ class NotificationList(generics.ListAPIView):
     serializer_class = serializers.NotificationSerializer
 
     def get_queryset(self):
-        #Check if user have access to this notification
-        get_object_or_404(
-            models.Notification,
-            receiver__id=self.kwargs['uid']
-        )
-
-        return models.Notification.objects.filter(receiver__id=self.kwargs['uid'])
+        return models.Notification.objects.filter(receiver__id=self.request.user.id)
 
 
 class NotificationRetrieveUpdate(generics.RetrieveUpdateAPIView):
@@ -206,10 +206,11 @@ class NotificationRetrieveUpdate(generics.RetrieveUpdateAPIView):
         #Check if user have access to this notification
         get_object_or_404(
             models.Notification,
-            receiver__id=self.kwargs['uid']
+            receiver__id=self.request.user.id,
+            pk=self.kwargs['pk']
         )
 
-        return models.Notification.objects.filter(receiver__id=self.kwargs['uid'])
+        return models.Notification.objects.filter(receiver__id=self.request.user.id,pk=self.kwargs['pk'])
 
 
 """

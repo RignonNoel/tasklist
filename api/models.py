@@ -4,6 +4,8 @@ from __future__ import unicode_literals
 from django.db import models
 
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 RIGHT_ACCESS = (
@@ -105,6 +107,12 @@ class Task(models.Model):
         'Project',
         verbose_name="Project",
         related_name="tasks"
+    )
+
+    created_by = models.ForeignKey(
+        User,
+        verbose_name='Created by',
+        related_name='task_created'
     )
 
     assigned = models.ForeignKey(
@@ -288,6 +296,11 @@ class Notification(models.Model):
         default=1
     )
 
+    is_read = models.BooleanField(
+        verbose_name='Is read',
+        default=0
+    )
+
     target_type = models.CharField(
         verbose_name='Target type',
         max_length=50
@@ -311,3 +324,20 @@ class Notification(models.Model):
         verbose_name='Text',
     )
 
+
+# Receivers
+@receiver(post_save, sender=Task, dispatch_uid="task_saved")
+def task_saved(sender, instance, created, *args, **kwargs):
+    # If the user creating the task is not the one assigned
+    if created and instance.assigned is not None and instance.assigned is not instance.created_by:
+        Notification.objects.create(
+            sender=instance.created_by,
+            receiver=instance.assigned,
+            published_date=instance.creation_date,
+            target_type="task",
+            target_id=instance.id,
+            target_intention="create",
+            title='You have been assigned to "%s"' % instance.name,
+            text=instance.description
+        )
+    
