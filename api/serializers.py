@@ -176,7 +176,9 @@ class TaskSerializer(serializers.ModelSerializer):
     created_by_id = serializers.PrimaryKeyRelatedField(
         queryset=models.User.objects.all(),
         source='created_by',
-        write_only=True
+        write_only=True,
+        required=False,
+        allow_null=True
     )
 
     assigned = UserSerializer(read_only=True)

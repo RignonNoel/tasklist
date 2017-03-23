@@ -112,7 +112,8 @@ class Task(models.Model):
     created_by = models.ForeignKey(
         User,
         verbose_name='Created by',
-        related_name='task_created'
+        related_name='task_created',
+        blank=True
     )
 
     assigned = models.ForeignKey(
