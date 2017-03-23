@@ -180,6 +180,36 @@ class TaskRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         return models.Task.objects.all()
 
+"""
+NOTIFICATIONS
+"""
+
+
+class NotificationList(generics.ListAPIView):
+    serializer_class = serializers.NotificationSerializer
+
+    def get_queryset(self):
+        #Check if user have access to this notification
+        get_object_or_404(
+            models.Notification,
+            receiver__id=self.kwargs['uid']
+        )
+
+        return models.Notification.objects.filter(receiver__id=self.kwargs['uid'])
+
+
+class NotificationRetrieveUpdate(generics.RetrieveUpdateAPIView):
+    serializer_class = serializers.NotificationSerializer
+
+    def get_queryset(self):
+        #Check if user have access to this notification
+        get_object_or_404(
+            models.Notification,
+            receiver__id=self.kwargs['uid']
+        )
+
+        return models.Notification.objects.filter(receiver__id=self.kwargs['uid'])
+
 
 """
 LABELS

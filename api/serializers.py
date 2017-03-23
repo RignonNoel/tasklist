@@ -189,6 +189,27 @@ class TaskSerializer(serializers.ModelSerializer):
     )
 
 
+class NotificationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Notification
+        fields = '__all__'
+
+    sender = UserSerializer(read_only=True)
+    sender_id = serializers.PrimaryKeyRelatedField(
+        queryset=models.User.objects.all(),
+        source='sender',
+        write_only=True
+    )
+
+    receiver = UserSerializer(read_only=True)
+    receiver_id = serializers.PrimaryKeyRelatedField(
+        queryset=models.User.objects.all(),
+        source='receiver',
+        write_only=True
+    )
+
+
 class FileSerializer(serializers.ModelSerializer):
 
     class Meta:
