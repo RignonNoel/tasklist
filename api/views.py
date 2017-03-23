@@ -32,6 +32,7 @@ class ObtainAuthToken(generics.CreateAPIView):
 
         content = {
             'token': str(token.key),
+            'user_id': user.id
         }
 
         return Response(content)
