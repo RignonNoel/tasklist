@@ -171,8 +171,8 @@ class TaskListCreate(generics.ListCreateAPIView):
     serializer_class = serializers.TaskSerializer
     filter_class = TaskFilter
 
-    def get_initial(self):
-        return {'created_by': self.request.user}
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
 
     def get_queryset(self):
         return models.Task.objects.filter(project__access__user=self.request.user)
@@ -181,8 +181,8 @@ class TaskListCreate(generics.ListCreateAPIView):
 class TaskRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.TaskSerializer
 
-    def get_initial(self):
-        return {'created_by': self.request.user}
+    def perform_update(self, serializer):
+        serializer.save(created_by=self.request.user)
 
     def get_queryset(self):
         return models.Task.objects.all()
