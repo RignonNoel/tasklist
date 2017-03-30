@@ -16,6 +16,17 @@ urlpatterns = format_suffix_patterns(
             views.UserRetrieve.as_view(),
             name='users_detail'
         ),
+        # NOTIFICATION
+        url(
+            r'^notification$',
+            views.NotificationList.as_view(),
+            name='notification_list'
+        ),
+        url(
+            r'^notification/(?P<pk>\d+)$',
+            views.NotificationRetrieveUpdate.as_view(),
+            name='notification_detail'
+        ),
         # PROJECTS
         url(
             r'^projects$',

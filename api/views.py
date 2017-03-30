@@ -7,6 +7,7 @@ from api import serializers
 
 import django_filters
 from django.shortcuts import get_object_or_404
+from django.shortcuts import get_list_or_404
 
 from rest_framework import generics
 from rest_framework import filters
@@ -32,6 +33,7 @@ class ObtainAuthToken(generics.CreateAPIView):
 
         content = {
             'token': str(token.key),
+            'id': user.id
         }
 
         return Response(content)
@@ -170,6 +172,9 @@ class TaskListCreate(generics.ListCreateAPIView):
     serializer_class = serializers.TaskSerializer
     filter_class = TaskFilter
 
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
     def get_queryset(self):
         return models.Task.objects.filter(project__access__user=self.request.user)
 
@@ -177,8 +182,36 @@ class TaskListCreate(generics.ListCreateAPIView):
 class TaskRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.TaskSerializer
 
+    def perform_update(self, serializer):
+        serializer.save(created_by=self.request.user)
+
     def get_queryset(self):
         return models.Task.objects.all()
+
+"""
+NOTIFICATIONS
+"""
+
+
+class NotificationList(generics.ListAPIView):
+    serializer_class = serializers.NotificationSerializer
+
+    def get_queryset(self):
+        return models.Notification.objects.filter(receiver__id=self.request.user.id)
+
+
+class NotificationRetrieveUpdate(generics.RetrieveUpdateAPIView):
+    serializer_class = serializers.NotificationSerializer
+
+    def get_queryset(self):
+        #Check if user have access to this notification
+        get_object_or_404(
+            models.Notification,
+            receiver__id=self.request.user.id,
+            pk=self.kwargs['pk']
+        )
+
+        return models.Notification.objects.filter(receiver__id=self.request.user.id,pk=self.kwargs['pk'])
 
 
 """
