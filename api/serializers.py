@@ -175,6 +175,15 @@ class TaskSerializer(serializers.ModelSerializer):
         many=True
     )
     
+    created_by = UserSerializer(read_only=True)
+    created_by_id = serializers.PrimaryKeyRelatedField(
+        queryset=models.User.objects.all(),
+        source='created_by',
+        write_only=True,
+        required=False,
+        allow_null=True
+    )
+
     assigned = UserSerializer(read_only=True)
     assigned_id = serializers.PrimaryKeyRelatedField(
         queryset=models.User.objects.all(),
@@ -188,6 +197,27 @@ class TaskSerializer(serializers.ModelSerializer):
     project_id = serializers.PrimaryKeyRelatedField(
         queryset=models.Project.objects.all(),
         source='project',
+        write_only=True
+    )
+
+
+class NotificationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Notification
+        fields = '__all__'
+
+    sender = UserSerializer(read_only=True)
+    sender_id = serializers.PrimaryKeyRelatedField(
+        queryset=models.User.objects.all(),
+        source='sender',
+        write_only=True
+    )
+
+    receiver = UserSerializer(read_only=True)
+    receiver_id = serializers.PrimaryKeyRelatedField(
+        queryset=models.User.objects.all(),
+        source='receiver',
         write_only=True
     )
 
