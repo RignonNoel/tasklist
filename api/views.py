@@ -32,7 +32,8 @@ class ObtainAuthToken(generics.CreateAPIView):
         token, created = Token.objects.get_or_create(user=user)
 
         content = {
-            'token': str(token.key)
+            'token': str(token.key),
+            'id': user.id
         }
 
         return Response(content)
