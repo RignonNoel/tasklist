@@ -172,9 +172,10 @@ class TaskSerializer(serializers.ModelSerializer):
 
     labels = serializers.PrimaryKeyRelatedField(
         queryset=models.Label.objects.all(),
-        many=True
+        many=True,
+        required=False
     )
-    
+
     created_by = UserSerializer(read_only=True)
     created_by_id = serializers.PrimaryKeyRelatedField(
         queryset=models.User.objects.all(),
