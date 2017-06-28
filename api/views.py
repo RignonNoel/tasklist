@@ -17,6 +17,18 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 
 
+class TaskFilter(filters.FilterSet):
+    end_date_lte = django_filters.DateTimeFilter(
+        name="end_date",
+        lookup_expr='lte'
+    )
+
+    class Meta:
+        model = models.Task
+        fields = ['id', 'name', 'creation_date',
+                  'end_date', 'project__id', 'end_date_lte', 'assigned__id']
+
+
 """
 TOKEN
 """
@@ -93,6 +105,7 @@ class ProjectAccessList(generics.ListAPIView):
 
 class ProjectTaskList(generics.ListAPIView):
     serializer_class = serializers.TaskSerializer
+    filter_class = TaskFilter
 
     def get_queryset(self):
         # Check if project exist
@@ -108,7 +121,7 @@ class ProjectTaskList(generics.ListAPIView):
             user__id=self.request.user.id
         )
 
-        return models.Task.objects.filter(project__id=self.kwargs['pk'])
+        return models.Task.objects.filter(project__id=self.kwargs['pk']).order_by('end_date')
 
 
 class ProjectLabelList(generics.ListAPIView):
@@ -154,18 +167,6 @@ class AccessRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
 """
 TASKS
 """
-
-
-class TaskFilter(filters.FilterSet):
-    end_date_lte = django_filters.DateTimeFilter(
-        name="end_date",
-        lookup_expr='lte'
-    )
-
-    class Meta:
-        model = models.Task
-        fields = ['id', 'name', 'creation_date',
-                  'end_date', 'project__id', 'end_date_lte', 'assigned__id']
 
 
 class TaskListCreate(generics.ListCreateAPIView):
