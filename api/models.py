@@ -7,6 +7,9 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from app.socket import Socket
+from app.dispatcher import Dispatcher
+
 
 RIGHT_ACCESS = (
     ('READ_ONLY', 'Read-only'),
@@ -331,7 +334,7 @@ class Notification(models.Model):
 def task_saved(sender, instance, created, *args, **kwargs):
     # If the user creating the task is not the one assigned
     if created and instance.assigned is not None and instance.assigned is not instance.created_by:
-        Notification.objects.create(
+        n = Notification.objects.create(
             sender=instance.created_by,
             receiver=instance.assigned,
             published_date=instance.creation_date,
@@ -341,4 +344,9 @@ def task_saved(sender, instance, created, *args, **kwargs):
             title='You have been assigned to "%s"' % instance.name,
             text=instance.description
         )
+        try:
+            socket = Socket('http://127.0.0.1', '3030', '/server', 'MYSECRETKEY')
+            Dispatcher(socket).notify(n)
+        except:
+            pass
     
